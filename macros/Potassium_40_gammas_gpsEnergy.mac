@@ -1,0 +1,15 @@
+/edep/random/timeRandomSeed
+/edep/gdml/read /sdf/home/s/sfogarty/Desktop/LArTPC_sim/geometries/Module0.gdml
+#/edep/hitLength TPCActive_shape 0.00001 mm
+#/process/eLoss/StepFunction 0.2 0.001  mm
+/edep/update
+/gps/pos/type Volume
+/gps/pos/shape Para
+/gps/pos/centre 0.0 -22 0.0 cm
+/gps/pos/halfx 30.2723 cm
+/gps/pos/halfy 62.0543 cm
+/gps/pos/halfz 31.0163 cm
+/gps/ang/type iso
+/gps/particle gamma
+#/gps/ene/mono 1.46 MeV
+/gps/ene/mono 1.8 MeV

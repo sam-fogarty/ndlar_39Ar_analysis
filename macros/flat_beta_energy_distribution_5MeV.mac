@@ -1,0 +1,116 @@
+/edep/random/timeRandomSeed
+/edep/gdml/read /sdf/home/s/sfogarty/Desktop/LArTPC_sim/geometries/Module0.gdml
+/edep/hitLength TPCActive_shape 0.00001 mm
+/process/eLoss/StepFunction 0.2 0.001  mm
+/edep/update
+/gps/pos/type Volume
+/gps/pos/shape Para
+/gps/pos/centre 0.0 -22 0.0 cm
+/gps/pos/halfx 30.2723 cm
+/gps/pos/halfy 62.0543 cm
+/gps/pos/halfz 31.0163 cm
+/gps/ang/type iso
+/gps/particle e-
+/gps/ene/type User
+/gps/hist/type energy
+/gps/hist/point 0.200000 0.009901
+/gps/hist/point 0.248000 0.009901
+/gps/hist/point 0.296000 0.009901
+/gps/hist/point 0.344000 0.009901
+/gps/hist/point 0.392000 0.009901
+/gps/hist/point 0.440000 0.009901
+/gps/hist/point 0.488000 0.009901
+/gps/hist/point 0.536000 0.009901
+/gps/hist/point 0.584000 0.009901
+/gps/hist/point 0.632000 0.009901
+/gps/hist/point 0.680000 0.009901
+/gps/hist/point 0.728000 0.009901
+/gps/hist/point 0.776000 0.009901
+/gps/hist/point 0.824000 0.009901
+/gps/hist/point 0.872000 0.009901
+/gps/hist/point 0.920000 0.009901
+/gps/hist/point 0.968000 0.009901
+/gps/hist/point 1.016000 0.009901
+/gps/hist/point 1.064000 0.009901
+/gps/hist/point 1.112000 0.009901
+/gps/hist/point 1.160000 0.009901
+/gps/hist/point 1.208000 0.009901
+/gps/hist/point 1.256000 0.009901
+/gps/hist/point 1.304000 0.009901
+/gps/hist/point 1.352000 0.009901
+/gps/hist/point 1.400000 0.009901
+/gps/hist/point 1.448000 0.009901
+/gps/hist/point 1.496000 0.009901
+/gps/hist/point 1.544000 0.009901
+/gps/hist/point 1.592000 0.009901
+/gps/hist/point 1.640000 0.009901
+/gps/hist/point 1.688000 0.009901
+/gps/hist/point 1.736000 0.009901
+/gps/hist/point 1.784000 0.009901
+/gps/hist/point 1.832000 0.009901
+/gps/hist/point 1.880000 0.009901
+/gps/hist/point 1.928000 0.009901
+/gps/hist/point 1.976000 0.009901
+/gps/hist/point 2.024000 0.009901
+/gps/hist/point 2.072000 0.009901
+/gps/hist/point 2.120000 0.009901
+/gps/hist/point 2.168000 0.009901
+/gps/hist/point 2.216000 0.009901
+/gps/hist/point 2.264000 0.009901
+/gps/hist/point 2.312000 0.009901
+/gps/hist/point 2.360000 0.009901
+/gps/hist/point 2.408000 0.009901
+/gps/hist/point 2.456000 0.009901
+/gps/hist/point 2.504000 0.009901
+/gps/hist/point 2.552000 0.009901
+/gps/hist/point 2.600000 0.009901
+/gps/hist/point 2.648000 0.009901
+/gps/hist/point 2.696000 0.009901
+/gps/hist/point 2.744000 0.009901
+/gps/hist/point 2.792000 0.009901
+/gps/hist/point 2.840000 0.009901
+/gps/hist/point 2.888000 0.009901
+/gps/hist/point 2.936000 0.009901
+/gps/hist/point 2.984000 0.009901
+/gps/hist/point 3.032000 0.009901
+/gps/hist/point 3.080000 0.009901
+/gps/hist/point 3.128000 0.009901
+/gps/hist/point 3.176000 0.009901
+/gps/hist/point 3.224000 0.009901
+/gps/hist/point 3.272000 0.009901
+/gps/hist/point 3.320000 0.009901
+/gps/hist/point 3.368000 0.009901
+/gps/hist/point 3.416000 0.009901
+/gps/hist/point 3.464000 0.009901
+/gps/hist/point 3.512000 0.009901
+/gps/hist/point 3.560000 0.009901
+/gps/hist/point 3.608000 0.009901
+/gps/hist/point 3.656000 0.009901
+/gps/hist/point 3.704000 0.009901
+/gps/hist/point 3.752000 0.009901
+/gps/hist/point 3.800000 0.009901
+/gps/hist/point 3.848000 0.009901
+/gps/hist/point 3.896000 0.009901
+/gps/hist/point 3.944000 0.009901
+/gps/hist/point 3.992000 0.009901
+/gps/hist/point 4.040000 0.009901
+/gps/hist/point 4.088000 0.009901
+/gps/hist/point 4.136000 0.009901
+/gps/hist/point 4.184000 0.009901
+/gps/hist/point 4.232000 0.009901
+/gps/hist/point 4.280000 0.009901
+/gps/hist/point 4.328000 0.009901
+/gps/hist/point 4.376000 0.009901
+/gps/hist/point 4.424000 0.009901
+/gps/hist/point 4.472000 0.009901
+/gps/hist/point 4.520000 0.009901
+/gps/hist/point 4.568000 0.009901
+/gps/hist/point 4.616000 0.009901
+/gps/hist/point 4.664000 0.009901
+/gps/hist/point 4.712000 0.009901
+/gps/hist/point 4.760000 0.009901
+/gps/hist/point 4.808000 0.009901
+/gps/hist/point 4.856000 0.009901
+/gps/hist/point 4.904000 0.009901
+/gps/hist/point 4.952000 0.009901
+/gps/hist/point 5.000000 0.009901
