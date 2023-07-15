@@ -92,11 +92,75 @@ def get_hist_data(the_data, bins, data_type, calibrate=False, norm='none',binwid
     # get histogram parameters
     scale=1
     bincenters, y_norm, y_norm_std = norm_hist(data*eV_per_e, int(bins/2), range_start*eV_per_e,range_end*eV_per_e,norm,scale)
-    return bincenters, y_norm, y_norm_std, data*eV_per_e
+    return bincenters, y_norm, y_norm_std
 
-def plot_hist(bincenters, y_norm, y_norm_std, plots, color, linewidth, label):
+def plot_hist(bincenters, y_norm, y_norm_std, plots, color, linewidth, label, linestyle=None):
     ### add spectrum histogram to matplotlib axes
-    plots.step(bincenters, y_norm, linewidth=linewidth, color=color,where='mid',alpha=0.7, label=label)
+    plots.step(bincenters, y_norm, linewidth=linewidth, color=color,linestyle=linestyle, where='mid',alpha=0.7, label=label)
     plots.errorbar(bincenters, y_norm, yerr=y_norm_std,color='k',fmt='o',markersize = 1)
+    
+def get_charge_MC(folder, nFiles_dict, nbins, do_calibration, normalization, recomb_filename):
+    # Isotope ratios
+    isotopes_ratios = {
+        '60Co': 0.5,
+        '40K': 8.46,
+        '232Th': 1.44,
+        '238U': 0.752
+    }
+    
+    # Initialize dictionaries
+    charge_dict = {}
+    hist_data_dict = {}
+    
+    # Loop over isotopes
+    for iso_decay, nFiles in nFiles_dict.items():
+        iso, decay = iso_decay.split('_')
+        
+        # Loop over files
+        for i in range(1, nFiles+1):
+            f = h5py.File(folder + f'larndsim_{iso}_{decay}_10k_{i}_events.h5', 'r')
+            charge_temp = f['clusters']['q']
+            if i == 1:
+                charge_dict[iso_decay] = charge_temp
+            else:
+                charge_dict[iso_decay] = np.concatenate((charge_dict[iso_decay], charge_temp))
+        
+        # Call function to get histogram data
+        bincenters, y_norm, y_norm_std = \
+            get_hist_data(charge_dict[iso_decay], bins=nbins, data_type='MC', \
+            calibrate=do_calibration, norm=normalization, recomb_filename=recomb_filename)
+        
+        hist_data_dict[iso_decay] = {
+            'bincenters': bincenters,
+            'y_norm': y_norm,
+            'y_norm_std': y_norm_std
+        }
+    
+    # Combine y_norm and y_norm_std for isotopes that have betas and gammas
+    for iso in isotopes_ratios.keys():
+        R = isotopes_ratios[iso]
+        x = R * (np.sum(hist_data_dict[iso+'_betas']['y_norm']) / np.sum(hist_data_dict[iso+'_gammas']['y_norm']))
+        
+        hist_data_dict[iso] = {
+            'bincenters': hist_data_dict[iso+'_betas']['bincenters'],
+            'y_norm': hist_data_dict[iso+'_betas']['y_norm']*x + hist_data_dict[iso+'_gammas']['y_norm'],
+            'y_norm_std': np.sqrt((hist_data_dict[iso+'_betas']['y_norm_std']*R)**2 + hist_data_dict[iso+'_gammas']['y_norm_std']**2)
+        }
+    
+    return charge_dict, hist_data_dict
 
+def plot_isotopes(hist_data_dict, axes, colors, linewidth=2):    
+    # Loop over isotopes
+    for iso_decay, color in colors.items():
+        # Get histogram data
+        bincenters = hist_data_dict[iso_decay]['bincenters']
+        y_norm = hist_data_dict[iso_decay]['y_norm']
+        y_norm_std = hist_data_dict[iso_decay]['y_norm_std']
+        
+        if len(iso_decay.split('_')) > 1:
+            label = iso_decay.split('_')[0]
+        else:
+            label = iso_decay
+        # Call function to plot histogram
+        plot_hist(bincenters, y_norm, y_norm_std, axes, color, linewidth, label)
     

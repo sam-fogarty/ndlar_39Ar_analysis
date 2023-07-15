@@ -10,10 +10,9 @@ def main(filepath):
     # open data h5 file and get clusters
     f = h5py.File(filepath, 'r')
     charge_data = f['clusters']['q']
-    
-    recomb_filename = '/sdf/home/s/sfogarty/Desktop/RadDecay/LArNDLE/sim/larnd-sim/NEST/NEST_R-values_efield500_1keV_to_10000keV_1keV-stepsize_1000-events.h5'
     fig, axes = plt.subplots(nrows=1, ncols=1, sharex=False, sharey=False, figsize=(8,5))
     
+    recomb_filename = '/sdf/home/s/sfogarty/Desktop/RadDecay/LArNDLE/sim/larnd-sim/NEST/NEST_R-values_efield500_1keV_to_10000keV_1keV-stepsize_1000-events.h5'
     # make data histogram
     do_calibration = False
     normalization = 'None'
