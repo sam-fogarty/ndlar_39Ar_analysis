@@ -99,7 +99,7 @@ def plot_hist(bincenters, y_norm, y_norm_std, plots, color, linewidth, label, li
     plots.step(bincenters, y_norm, linewidth=linewidth, color=color,linestyle=linestyle, where='mid',alpha=0.7, label=label)
     plots.errorbar(bincenters, y_norm, yerr=y_norm_std,color='k',fmt='o',markersize = 1)
     
-def get_charge_MC(folder, nFiles_dict, nbins, do_calibration, normalization, recomb_filename):
+def get_charge_MC(nFiles_dict, folders_MC, filename_ending_MC, nbins, do_calibration, normalization, recomb_filename):
     # Isotope ratios
     isotopes_ratios = {
         '60Co': 0.5,
@@ -115,10 +115,11 @@ def get_charge_MC(folder, nFiles_dict, nbins, do_calibration, normalization, rec
     # Loop over isotopes
     for iso_decay, nFiles in nFiles_dict.items():
         iso, decay = iso_decay.split('_')
-        
+        folder = folders_MC[iso_decay]
+        ending = filename_ending_MC[iso_decay]
         # Loop over files
         for i in range(1, nFiles+1):
-            f = h5py.File(folder + f'larndsim_{iso}_{decay}_10k_{i}_events.h5', 'r')
+            f = h5py.File(folder + f'larndsim_{iso}_{decay}_10k_{i}_{ending}.h5', 'r')
             charge_temp = f['clusters']['q']
             if i == 1:
                 charge_dict[iso_decay] = charge_temp
