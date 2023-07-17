@@ -1,7 +1,7 @@
 /edep/random/timeRandomSeed
 /edep/gdml/read /sdf/home/s/sfogarty/Desktop/LArTPC_sim/geometries/Module0.gdml
 /edep/hitLength TPCActive_shape 0.00001 mm
-/process/eLoss/StepFunction 0.2 0.001  mm
+#/process/eLoss/StepFunction 0.2 0.001  mm
 /edep/update
 /run/setCut 0.0 mm
 /gps/pos/type Volume
