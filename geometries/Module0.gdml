@@ -30880,6 +30880,8 @@
       <solidref ref="TPCActive_shape"/>
       <auxiliary auxtype="SensDet" auxvalue="TPCActive_shape"/>
       <auxiliary auxtype="EField" auxvalue="(500.0 V/cm, 0.0 V/cm, 0.0 V/cm)"/>
+      <auxiliary auxtype="StepLimit" auxvalue="1.0 mm"/>
+      
     </volume>
     <volume name="volTPC">
       <materialref ref="LAr"/>
