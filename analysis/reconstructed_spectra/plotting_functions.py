@@ -16,32 +16,17 @@ v_ref_data = 1300.78125
 gain_data = 1/221
 gain_sim = 0.004
 
-def norm_hist(array, bins, range_start, range_end, norm, scale=1):
-    ### make normalized histogram
+def make_hist(array, bins, range_start, range_end):
+    ### make histogram of charge
     
     # get histogram data
-    y,binEdges = np.histogram(np.array(array),bins=bins,range=(range_start,range_end))
+    bin_contents,binEdges = np.histogram(np.array(array),bins=bins,range=(range_start,range_end))
     bincenters = 0.5*(binEdges[1:]+binEdges[:-1])
-    menStd     = np.sqrt(y)
-    y_norm = np.zeros_like(y,dtype='float64')
-    y_norm_std = np.zeros_like(y,dtype='float64')
+    error      = np.sqrt(bin_contents)
     
-    # normalize bincontents
-    bincontents_total = np.sum(y)
-    for i in range(len(y)):
-        y_uncert = ufloat(y[i],menStd[i])
-        if norm == 'area':
-            y_uncert = y_uncert/bincontents_total
-        elif norm == 'max':
-            y_uncert = y_uncert/np.max(y)
-        else:
-            y_uncert = y_uncert
-        y_uncert *= scale
-        y_norm[i] = y_uncert.nominal_value
-        y_norm_std[i] = y_uncert.std_dev
-    return bincenters, y_norm, y_norm_std
+    return bincenters, bin_contents, error
 
-def get_hist_data(the_data, bins, data_type, calibrate=False, norm='none',binwidth=None,recomb_filename=None):
+def get_hist_data(the_data, bins, data_type, calibrate=False, binwidth=None, recomb_filename=None):
     ### set bin size and histogram range, correct for recombination using NEST, return histogram parameters
     # INPUT: `the_data` is a 1D numpy array of charge cluster charge values
     #        `bins` is the number of bins to use (this effectively sets the range, the binsize is constant w.r.t. bins)
@@ -90,18 +75,23 @@ def get_hist_data(the_data, bins, data_type, calibrate=False, norm='none',binwid
             data = data/np.interp(data, charge_ke, recombination)
     
     # get histogram parameters
-    scale=1
-    bincenters, y_norm, y_norm_std = norm_hist(data*eV_per_e, int(bins/2), range_start*eV_per_e,range_end*eV_per_e,norm,scale)
-    return bincenters, y_norm, y_norm_std
+    bin_centers, bin_contents, bin_error = make_hist(data*eV_per_e, int(bins/2), range_start*eV_per_e,range_end*eV_per_e)
+    return bin_centers, bin_contents, bin_error
 
-def plot_hist(bincenters, y_norm, y_norm_std, plots, color, linewidth, label, linestyle=None):
+def plot_hist(bin_centers, bin_contents, bin_error, plots, color, linewidth, label, linestyle=None, norm=None):
     ### add spectrum histogram to matplotlib axes
-    plots.step(bincenters, y_norm, linewidth=linewidth, color=color,linestyle=linestyle, where='mid',alpha=0.7, label=label)
-    plots.errorbar(bincenters, y_norm, yerr=y_norm_std,color='k',fmt='o',markersize = 1)
     
-def get_charge_MC(nFiles_dict, folders_MC, filename_ending_MC, nbins, do_calibration, normalization, recomb_filename):
+    if norm == 'area':
+        total_bin_contents = np.sum(bin_contents)
+        bin_contents = bin_contents / total_bin_contents
+        bin_error = bin_error / total_bin_contents
+
+    plots.step(bin_centers, bin_contents, linewidth=linewidth, color=color,linestyle=linestyle, where='mid',alpha=0.7, label=label)
+    plots.errorbar(bin_centers, bin_contents, yerr=bin_error,color='k',fmt='o',markersize = 1)
+    
+def get_charge_MC(nFiles_dict, folders_MC, filename_ending_MC, nbins, do_calibration, recomb_filename):
     # Isotope ratios
-    isotopes_ratios = {
+    isotopes_ratios = { # beta/gamma ratio
         '60Co': 0.5,
         '40K': 8.46,
         '232Th': 1.44,
@@ -127,41 +117,42 @@ def get_charge_MC(nFiles_dict, folders_MC, filename_ending_MC, nbins, do_calibra
                 charge_dict[iso_decay] = np.concatenate((charge_dict[iso_decay], charge_temp))
         
         # Call function to get histogram data
-        bincenters, y_norm, y_norm_std = \
+        bin_centers, bin_contents, bin_error = \
             get_hist_data(charge_dict[iso_decay], bins=nbins, data_type='MC', \
-            calibrate=do_calibration, norm=normalization, recomb_filename=recomb_filename)
+            calibrate=do_calibration, recomb_filename=recomb_filename)
         
         hist_data_dict[iso_decay] = {
-            'bincenters': bincenters,
-            'y_norm': y_norm,
-            'y_norm_std': y_norm_std
+            'bin_centers': bin_centers,
+            'bin_contents': bin_contents,
+            'bin_error': bin_error
         }
     
     # Combine y_norm and y_norm_std for isotopes that have betas and gammas
     for iso in isotopes_ratios.keys():
         R = isotopes_ratios[iso]
-        x = R * (np.sum(hist_data_dict[iso+'_betas']['y_norm']) / np.sum(hist_data_dict[iso+'_gammas']['y_norm']))
+        x = R * (np.sum(hist_data_dict[iso+'_gammas']['bin_contents']) / np.sum(hist_data_dict[iso+'_betas']['bin_contents']))
         
         hist_data_dict[iso] = {
-            'bincenters': hist_data_dict[iso+'_betas']['bincenters'],
-            'y_norm': hist_data_dict[iso+'_betas']['y_norm']*x + hist_data_dict[iso+'_gammas']['y_norm'],
-            'y_norm_std': np.sqrt((hist_data_dict[iso+'_betas']['y_norm_std']*R)**2 + hist_data_dict[iso+'_gammas']['y_norm_std']**2)
+            'bin_centers': hist_data_dict[iso+'_betas']['bin_centers'],
+            'bin_contents': hist_data_dict[iso+'_betas']['bin_contents']*x + hist_data_dict[iso+'_gammas']['bin_contents'],
+            'bin_error': np.sqrt((hist_data_dict[iso+'_betas']['bin_error']*R)**2 + hist_data_dict[iso+'_gammas']['bin_error']**2)
         }
     
     return charge_dict, hist_data_dict
 
-def plot_isotopes(hist_data_dict, axes, colors, linewidth=2):    
+def plot_isotopes(hist_data_dict, axes, colors, norm=None, linewidth=2):    
     # Loop over isotopes
     for iso_decay, color in colors.items():
         # Get histogram data
-        bincenters = hist_data_dict[iso_decay]['bincenters']
-        y_norm = hist_data_dict[iso_decay]['y_norm']
-        y_norm_std = hist_data_dict[iso_decay]['y_norm_std']
+        bin_centers = hist_data_dict[iso_decay]['bin_centers']
+        bin_contents = hist_data_dict[iso_decay]['bin_contents']
+        bin_error = hist_data_dict[iso_decay]['bin_error']
         
         if len(iso_decay.split('_')) > 1:
             label = iso_decay.split('_')[0]
         else:
             label = iso_decay
+        
         # Call function to plot histogram
-        plot_hist(bincenters, y_norm, y_norm_std, axes, color, linewidth, label)
+        plot_hist(bin_centers, bin_contents, bin_error, axes, color, linewidth, label, norm=norm)
     
