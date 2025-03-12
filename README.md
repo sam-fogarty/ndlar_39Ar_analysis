@@ -1,1 +1,1 @@
-Repository to house code for doing a radiologicals analysis in the ndlar prototypes. 
+Code for doing analysis and simulation of radiologicals in the DUNE ND-LAr prototypes. 
