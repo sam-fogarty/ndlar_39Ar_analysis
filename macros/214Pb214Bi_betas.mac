@@ -1,0 +1,74 @@
+/edep/random/timeRandomSeed
+/edep/gdml/read /sdf/home/s/sfogarty/larnd-sim/2x2_sim/geometry/Merged2x2MINERvA_v4/Merged2x2MINERvA_v4_noRock.gdml
+/edep/hitLength TPCActive_shape 0.00001 mm
+/edep/update
+/gps/pos/type Volume
+/gps/pos/shape Para
+/gps/pos/centre 0.0 0.0 0.0 cm
+/gps/pos/halfx 70.0 cm
+/gps/pos/halfy 65.0 cm
+/gps/pos/halfz 70.0 cm
+/gps/ang/type iso
+/gps/particle e-
+/gps/ene/type User
+/gps/hist/type energy
+/gps/hist/point 0.0001 0.163845
+/gps/hist/point 0.0536 0.086568
+/gps/hist/point 0.1072 0.106829
+/gps/hist/point 0.1607 0.113490
+/gps/hist/point 0.2143 0.123010
+/gps/hist/point 0.2679 0.070443
+/gps/hist/point 0.3214 0.064344
+/gps/hist/point 0.3750 0.045248
+/gps/hist/point 0.4285 0.036621
+/gps/hist/point 0.4821 0.030803
+/gps/hist/point 0.5357 0.021939
+/gps/hist/point 0.5892 0.017049
+/gps/hist/point 0.6428 0.013163
+/gps/hist/point 0.6963 0.011200
+/gps/hist/point 0.7499 0.010195
+/gps/hist/point 0.8035 0.009264
+/gps/hist/point 0.8570 0.008182
+/gps/hist/point 0.9106 0.007203
+/gps/hist/point 0.9641 0.006347
+/gps/hist/point 1.0177 0.006260
+/gps/hist/point 1.0713 0.004923
+/gps/hist/point 1.1248 0.004649
+/gps/hist/point 1.1784 0.003806
+/gps/hist/point 1.2319 0.003231
+/gps/hist/point 1.2855 0.003972
+/gps/hist/point 1.3391 0.002290
+/gps/hist/point 1.3926 0.002064
+/gps/hist/point 1.4462 0.001744
+/gps/hist/point 1.4997 0.001639
+/gps/hist/point 1.5533 0.001457
+/gps/hist/point 1.6069 0.001398
+/gps/hist/point 1.6604 0.001627
+/gps/hist/point 1.7140 0.001301
+/gps/hist/point 1.7675 0.001261
+/gps/hist/point 1.8211 0.001149
+/gps/hist/point 1.8747 0.001055
+/gps/hist/point 1.9282 0.001004
+/gps/hist/point 1.9818 0.001030
+/gps/hist/point 2.0353 0.000911
+/gps/hist/point 2.0889 0.000893
+/gps/hist/point 2.1425 0.000800
+/gps/hist/point 2.1960 0.000724
+/gps/hist/point 2.2496 0.000711
+/gps/hist/point 2.3031 0.000600
+/gps/hist/point 2.3567 0.000543
+/gps/hist/point 2.4103 0.000497
+/gps/hist/point 2.4638 0.000481
+/gps/hist/point 2.5174 0.000410
+/gps/hist/point 2.5709 0.000369
+/gps/hist/point 2.6245 0.000296
+/gps/hist/point 2.6781 0.000293
+/gps/hist/point 2.7316 0.000244
+/gps/hist/point 2.7852 0.000169
+/gps/hist/point 2.8387 0.000138
+/gps/hist/point 2.8923 0.000112
+/gps/hist/point 2.9459 0.000074
+/gps/hist/point 2.9994 0.000058
+/gps/hist/point 3.0530 0.000034
+/gps/hist/point 3.1065 0.000034
+/gps/hist/point 3.1601 0.000005

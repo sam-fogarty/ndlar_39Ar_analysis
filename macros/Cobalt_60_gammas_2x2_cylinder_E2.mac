@@ -1,0 +1,15 @@
+/edep/random/timeRandomSeed
+/edep/gdml/read /sdf/home/s/sfogarty/larnd-sim/2x2_sim/geometry/Merged2x2MINERvA_v4/Merged2x2MINERvA_v4_noRock.gdml
+/edep/hitLength TPCActive_shape 0.00001 mm
+#/process/eLoss/StepFunction 0.2 0.001  mm
+/edep/update
+/gps/pos/type Surface
+/gps/pos/shape Cylinder
+/gps/pos/centre 0.0 0.0 -17.5 cm
+/gps/pos/radius 115 cm
+#/gps/pos/halfx 70.0 cm
+/gps/pos/halfz 112.5 cm
+#/gps/pos/halfz 70.0 cm
+/gps/ang/type iso
+/gps/particle gamma
+/gps/energy 1.333 MeV
